@@ -25,11 +25,13 @@ namespace Buivol_web.Controllers
             return _toode;
         }
 
+        //Iseseisvad harjutused
+
         // GET: toode/true->false-false->true
-        [HttpGet("true->false-false->true")]
+        [HttpGet("muuta-active")]
         public Toode TrueFalse()
         {
-            if(_toode.IsActive)
+            if (_toode.IsActive)
             {
                 _toode.IsActive = false;
             }

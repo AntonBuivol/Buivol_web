@@ -7,6 +7,8 @@ namespace Buivol_web.Controllers
     [ApiController]
     public class PrimitiividController : ControllerBase
     {
+        private Random rand = new Random();
+
         // GET: primitiivid/hello-world
         [HttpGet("hello-world")]
         public string HelloWorld()
@@ -41,8 +43,32 @@ namespace Buivol_web.Controllers
         {
             for (int i = 0; i < arv; i++)
             {
-                Console.WriteLine("See on logi nr " + i);
+                Console.WriteLine("See on logi nr " + (i + 1));
             }
+        }
+
+        //Iseseisvad harjutused
+
+        [HttpGet("random/{min}/{max}")]
+        public int GetRandomNumber(int min, int max)
+        {
+            return rand.Next(min, max);
+        }
+
+        [HttpGet("calculate-age/{birthYear}/{birthMonth}/{birthDay}")]
+        public string CalculateAge(int birthYear, int birthMonth, int birthDay)
+        {
+            DateTime today = DateTime.Now;
+            DateTime birthDate = new DateTime(birthYear, birthMonth, birthDay);
+
+            int age = today.Year - birthYear;
+
+            if (today.Month < birthMonth || (today.Month == birthMonth && today.Day < birthDay))
+            {
+                age--;
+            }
+
+            return $"Te olete {age} aastad vana.";
         }
     }
 }
