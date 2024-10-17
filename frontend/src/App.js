@@ -8,20 +8,22 @@ function App() {
     const priceRef = useRef();
     const isActiveRef = useRef();
 
-
     useEffect(() => {
-        fetch("https://localhost:5196/tooted")
+        fetch("https://localhost:7175/tooted")
             .then(res => res.json())
             .then(json => setTooted(json));
     }, []);
 
+    //////////////////////////////////////////////-->
+
     function kustuta(index) {
-        fetch("https://localhost:5196/tooted/kustuta/" + index, { "method": "DELETE" })
+        fetch("https://localhost:7175/tooted/kustuta/" + index, { "method": "DELETE" })
             .then(res => res.json())
             .then(json => setTooted(json));
     }
 
-    ////////////////////////
+    //////////////////////////////////////////////-->
+
     function lisa() {
         const uusToode = {
             "id": Number(idRef.current.value),
@@ -29,18 +31,21 @@ function App() {
             "price": Number(priceRef.current.value),
             "isActive": isActiveRef.current.checked
         }
-        fetch("https://localhost:5196/tooted/lisa", { "method": "POST", "body": JSON.stringify(uusToode) })
+        fetch("https://localhost:7175/tooted/lisa", { "method": "POST", "body": JSON.stringify(uusToode) })
             .then(res => res.json())
             .then(json => setTooted(json));
     }
-    ////////////////////////
+
+    //////////////////////////////////////////////-->
 
     function dollariteks() {
-        const kurss = 1.1;
-        fetch("https://localhost:5196/tooted/hind-dollaritesse/" + kurss, { "method": "PATCH" })
+        const kurss = 1.1;                                      ////////////////////////
+        fetch("https://localhost:7175/tooted/hind-dollaritesse/" + kurss, { "method": "PATCH" })
             .then(res => res.json())
             .then(json => setTooted(json));
     }
+
+    //////////////////////////////////////////////-->
 
     return (
         <div className="App">

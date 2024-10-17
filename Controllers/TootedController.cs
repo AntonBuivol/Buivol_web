@@ -4,7 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace Buivol_web.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("[controller]")]
     [ApiController]
     public class TootedController : ControllerBase
     {
@@ -17,14 +17,14 @@ namespace Buivol_web.Controllers
             new Toode(5,"Vitamin well", 2.5, true)
         };
 
-        // GET https://localhost:4444/tooted
+        // GET :/tooded
         [HttpGet]
         public List<Toode> Get()
         {
             return _tooted;
         }
 
-        // DELETE https://localhost:4444/tooted/kustuta/0
+        // DELETE :/tooded/kustuta/0
         [HttpDelete("kustuta/{index}")]
         public List<Toode> Delete(int index)
         {
@@ -39,7 +39,7 @@ namespace Buivol_web.Controllers
             return "Kustutatud!";
         }
 
-        // POST https://localhost:4444/tooted/lisa/1/Coca/1.5/true
+        // POST :/tooted/lisa
         [HttpPost("lisa")]
         public List<Toode> Add([FromBody] Toode toode)
         {
@@ -47,22 +47,34 @@ namespace Buivol_web.Controllers
             return _tooted;
         }
 
-        [HttpPost("lisa2")]
-        public List<Toode> Add2(int id, string nimi, double hind, bool aktiivne)
+        [HttpPost("lisa2")] // POST :/tooded/lisa2?id=1&nimi=Koola&hind=1.5&aktiivne=true
+        public List<Toode> Add2([FromQuery] int id, [FromQuery] string nimi, [FromQuery] double hind, [FromQuery] bool aktiivne)
         {
             Toode toode = new Toode(id, nimi, hind, aktiivne);
             _tooted.Add(toode);
             return _tooted;
         }
 
-        // PATCH https://localhost:4444/tooted/hind-dollaritesse/1.5
-        [HttpPatch("hind-dollaritesse/{kurss}")]
-        public List<Toode> UpdatePrices(double kurss)
+        [HttpPatch("hind-dollaritesse/{kurss}")] // PATCH :/tooded/hind-dollaritesse/1.5
+        public List<Toode> Dollaritesse(double kurss)
         {
             for (int i = 0; i < _tooted.Count; i++)
             {
                 _tooted[i].Price = _tooted[i].Price * kurss;
             }
+            return _tooted;
+        }
+
+        // või foreachina:
+
+        [HttpPatch("hind-dollaritesse2/{kurss}")] // PATCH :/tooded/hind-dollaritesse2/1.5
+        public List<Toode> Dollaritesse2(double kurss)
+        {
+            foreach (var t in _tooted)
+            {
+                t.Price = t.Price * kurss;
+            }
+
             return _tooted;
         }
 
