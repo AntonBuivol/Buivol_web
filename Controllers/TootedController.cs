@@ -17,14 +17,14 @@ namespace Buivol_web.Controllers
             new Toode(5,"Vitamin well", 2.5, true)
         };
 
-        // GET :/tooded
+        // GET :/tooted
         [HttpGet]
         public List<Toode> Get()
         {
             return _tooted;
         }
 
-        // DELETE :/tooded/kustuta/0
+        // DELETE :/tooted/kustuta/0
         [HttpDelete("kustuta/{index}")]
         public List<Toode> Delete(int index)
         {
@@ -47,7 +47,7 @@ namespace Buivol_web.Controllers
             return _tooted;
         }
 
-        [HttpPost("lisa2")] // POST :/tooded/lisa2?id=1&nimi=Koola&hind=1.5&aktiivne=true
+        [HttpPost("lisa2")] // POST :/tooted/lisa2?id=1&nimi=Koola&hind=1.5&aktiivne=true
         public List<Toode> Add2([FromQuery] int id, [FromQuery] string nimi, [FromQuery] double hind, [FromQuery] bool aktiivne)
         {
             Toode toode = new Toode(id, nimi, hind, aktiivne);
@@ -55,7 +55,7 @@ namespace Buivol_web.Controllers
             return _tooted;
         }
 
-        [HttpPatch("hind-dollaritesse/{kurss}")] // PATCH :/tooded/hind-dollaritesse/1.5
+        [HttpPatch("hind-dollaritesse/{kurss}")] // PATCH :/tooted/hind-dollaritesse/1.5
         public List<Toode> Dollaritesse(double kurss)
         {
             for (int i = 0; i < _tooted.Count; i++)
@@ -67,7 +67,7 @@ namespace Buivol_web.Controllers
 
         // või foreachina:
 
-        [HttpPatch("hind-dollaritesse2/{kurss}")] // PATCH :/tooded/hind-dollaritesse2/1.5
+        [HttpPatch("hind-dollaritesse2/{kurss}")] // PATCH :/tooted/hind-dollaritesse2/1.5
         public List<Toode> Dollaritesse2(double kurss)
         {
             foreach (var t in _tooted)

@@ -4,7 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace Buivol_web.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("[controller]")]
     [ApiController]
     public class ToodeController : ControllerBase
     {
@@ -42,15 +42,15 @@ namespace Buivol_web.Controllers
             return _toode;
         }
 
-        // GET: muuta-nimi
+        // GET: toode/muuta-nimi
         [HttpGet("muuta-nimi")]
-        public Toode MuutaNimi()
+        public Toode MuutaNimi(string Name)
         {
-            _toode.Name = _toode.Name;
+            _toode.Name = Name;
             return _toode;
         }
 
-        // GET: muuta-hinda
+        // GET: toode/muuta-hinda
         [HttpGet("muuta-hinda")]
         public Toode MuutaHinda()
         {

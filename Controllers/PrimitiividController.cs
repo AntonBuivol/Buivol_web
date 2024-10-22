@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace Buivol_web.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("[controller]")]
     [ApiController]
     public class PrimitiividController : ControllerBase
     {
