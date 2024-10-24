@@ -30,10 +30,15 @@ namespace Buivol_web.Controllers
             return _kasutajad;
         }
 
-        [HttpPost("lisa/{id}/{kasutajanimi}/{salasona}/{eesnimi}/{perekonnanimi}")]
-        public List<Kasutajad> Add(int id, string kasutajanimi, string salasona, string eesnimi, string perekonnanimi)
+        [HttpDelete("kustuta2/{index}")]
+        public string Delete2(int index)
         {
-            Kasutajad kasutaja = new Kasutajad(id, kasutajanimi, salasona, eesnimi, perekonnanimi);
+            _kasutajad.RemoveAt(index);
+            return "Kustutatud!";
+        }
+        [HttpPost("lisa")]
+        public List<Kasutajad> Add([FromBody] Kasutajad kasutaja)
+        {
             _kasutajad.Add(kasutaja);
             return _kasutajad;
         }
@@ -44,6 +49,31 @@ namespace Buivol_web.Controllers
             Kasutajad kasutaja = new Kasutajad(id, kasutajanimi, salasona, eesnimi, perekonnanimi);
             _kasutajad.Add(kasutaja);
             return _kasutajad;
+        }
+
+        [HttpGet("näita/{id}")] // GET /kasutajad/näita/id
+        public ActionResult<Kasutajad> Naita(int id)
+        {
+            var kasutaja = _kasutajad.Find(t => t.Id == id);
+            return kasutaja != null ? kasutaja : NotFound();
+        }
+
+        // PUT https://localhost:port/kasutajad/uuenda/{id}
+        [HttpPut("uuenda/{id}")]
+        public ActionResult<Kasutajad> Update(int id, [FromBody] Kasutajad uuendatudkasutaja)
+        {
+            var Kasutaja = _kasutajad.Find(t => t.Id == id);
+            if (Kasutaja == null)
+            {
+                return NotFound();
+            }
+
+            Kasutaja.Kasutajanimi = uuendatudkasutaja.Kasutajanimi;
+            Kasutaja.Parool = uuendatudkasutaja.Parool;
+            Kasutaja.Nimi = uuendatudkasutaja.Nimi;
+            Kasutaja.Perenimi = uuendatudkasutaja.Perenimi;
+
+            return Kasutaja;
         }
     }
 }
