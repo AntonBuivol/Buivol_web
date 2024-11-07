@@ -10,9 +10,9 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace Buivol_web.Migrations
 {
-    [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20241024081440_addedArticle")]
-    partial class addedArticle
+    [DbContext(typeof(DBContext))]
+    [Migration("20241106092646_addToode")]
+    partial class addToode
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -24,7 +24,7 @@ namespace Buivol_web.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
-            modelBuilder.Entity("Buivol_web.Models.Article", b =>
+            modelBuilder.Entity("Buivol_web.Models.Toode", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -32,17 +32,19 @@ namespace Buivol_web.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<string>("Content")
+                    b.Property<bool>("IsActive")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("Header")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<double>("Price")
+                        .HasColumnType("float");
 
                     b.HasKey("Id");
 
-                    b.ToTable("Articles");
+                    b.ToTable("Tooded");
                 });
 #pragma warning restore 612, 618
         }

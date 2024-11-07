@@ -11,10 +11,7 @@ namespace Buivol_web.Controllers
         private static List<Kasutajad> _kasutajad = new()
         {
             new Kasutajad(1,"Ivachik", "prl1", "Ivan", "Ivanov"),
-            new Kasutajad(2,"Petrovich", "prl2", "Petr", "Petrov"),
-            new Kasutajad(3,"Pirat", "prl3", "Jonny", "Depp"),
-            new Kasutajad(4,"Markul", "prl4", "Mark", "Ivanov"),
-            new Kasutajad(5,"Sportsmen", "prl5", "Mike", "Tyson")
+            new Kasutajad(2,"Petrovich", "prl2", "Petr", "Petrov")
         };
 
         [HttpGet]
