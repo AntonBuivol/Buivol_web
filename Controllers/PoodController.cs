@@ -16,7 +16,13 @@ namespace Buivol_web.Controllers
             _context = context;
         }
 
-        [HttpGet("{id}")]
+        [HttpGet("kasutaja")]
+        public List<Kasutajad> GetKasutajad()
+        {
+            return _context.Kasutajad.ToList();
+        }
+
+        [HttpGet("kasutaja/{id}")]
         public ActionResult<Kasutajad> GetKasutaja(int id)
         {
             var kasutaja = _context.Kasutajad.Find(id);
@@ -35,37 +41,51 @@ namespace Buivol_web.Controllers
             return _context.Kasutajad.ToList();
         }
 
+        [HttpDelete("kustutaKasutaja/{id}")]
+        public List<Kasutajad> DeleteKasutaja(int id)
+        {
+            var kasutaja = _context.Kasutajad.Find(id);
+            _context.Kasutajad.Remove(kasutaja);
+            return _context.Kasutajad.ToList();
+        }
+
+        [HttpGet("toode")]
+        public List<Toode> GetTooded()
+        {
+            return _context.Tooded.ToList();
+        }
+
+        [HttpGet("toode/{id}")]
+        public ActionResult<Toode> GetToode(int id)
+        {
+            var toode = _context.Tooded.Find(id);
+            if (toode == null)
+            {
+                return NotFound();
+            }
+            return toode;
+        }
+
         [HttpPost("LisaToode")]
-        public ActionResult<List<Toode>> LisaToode([FromBody] Toode toode)
+        public List<Toode> LisaToode([FromBody] Toode toode)
         {
             _context.Tooded.Add(toode);
             _context.SaveChanges();
-
-            var kasutaja = _context.Kasutajad.Include(k => k.Kasutajanimi).SingleOrDefault(k => k.Id == toode.Id);
-            if (kasutaja == null)
-            {
-                return NotFound();
-            }
-
-            return Ok(kasutaja);
+            return _context.Tooded.ToList();
         }
 
-        [HttpPut]
-        public ActionResult<List<Kasutajad>> PutKasutaja(int id, [FromBody] Kasutajad updatedkasutaja)
+        [HttpDelete("kustutaToode/{id}")]
+        public List<Toode> DeleteToode(int id)
         {
-            var kasutaja = _context.Kasutajad.Find(id);
-            if (kasutaja == null)
-            {
-                return NotFound();
-            }
-            kasutaja.Kasutajanimi = updatedkasutaja.Kasutajanimi;
-            kasutaja.Parool = updatedkasutaja.Parool;
-            kasutaja.Nimi = updatedkasutaja.Nimi;
-            kasutaja.Perenimi = updatedkasutaja.Perenimi;
-            _context.Kasutajad.Update(kasutaja);
-            _context.SaveChanges();
-            
-            return Ok(_context);
+            var toode = _context.Tooded.Find(id);
+            _context.Tooded.Remove(toode);
+            return _context.Tooded.ToList();
+        }
+
+        [HttpGet("pood")]
+        public List<Pood> GetPood()
+        {
+            return _context.Pood.ToList();
         }
     }
 }
