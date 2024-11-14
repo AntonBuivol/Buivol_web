@@ -11,8 +11,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Buivol_web.Migrations
 {
     [DbContext(typeof(DBContext))]
-    [Migration("20241107112311_update2")]
-    partial class update2
+    [Migration("20241114115254_addTables")]
+    partial class addTables
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -90,9 +90,6 @@ namespace Buivol_web.Migrations
                     b.Property<bool>("IsActive")
                         .HasColumnType("bit");
 
-                    b.Property<int>("KasutajaId")
-                        .HasColumnType("int");
-
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -108,7 +105,7 @@ namespace Buivol_web.Migrations
             modelBuilder.Entity("Buivol_web.Models.Pood", b =>
                 {
                     b.HasOne("Buivol_web.Models.Kasutajad", "Kasutajad")
-                        .WithMany()
+                        .WithMany("Poods")
                         .HasForeignKey("KasutajadId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -122,6 +119,11 @@ namespace Buivol_web.Migrations
                     b.Navigation("Kasutajad");
 
                     b.Navigation("Toode");
+                });
+
+            modelBuilder.Entity("Buivol_web.Models.Kasutajad", b =>
+                {
+                    b.Navigation("Poods");
                 });
 #pragma warning restore 612, 618
         }

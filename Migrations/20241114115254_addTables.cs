@@ -5,11 +5,42 @@
 namespace Buivol_web.Migrations
 {
     /// <inheritdoc />
-    public partial class addPood : Migration
+    public partial class addTables : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
         {
+            migrationBuilder.CreateTable(
+                name: "Kasutajad",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Kasutajanimi = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Parool = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Nimi = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Perenimi = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Kasutajad", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Tooded",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Price = table.Column<double>(type: "float", nullable: false),
+                    IsActive = table.Column<bool>(type: "bit", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Tooded", x => x.Id);
+                });
+
             migrationBuilder.CreateTable(
                 name: "Pood",
                 columns: table => new
@@ -53,6 +84,12 @@ namespace Buivol_web.Migrations
         {
             migrationBuilder.DropTable(
                 name: "Pood");
+
+            migrationBuilder.DropTable(
+                name: "Kasutajad");
+
+            migrationBuilder.DropTable(
+                name: "Tooded");
         }
     }
 }

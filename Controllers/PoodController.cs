@@ -82,10 +82,69 @@ namespace Buivol_web.Controllers
             return _context.Tooded.ToList();
         }
 
-        [HttpGet("pood")]
-        public List<Pood> GetPood()
+        [HttpGet("{id}")]
+        public ActionResult GetPood(int id)
         {
-            return _context.Pood.ToList();
+            var kasutajaJaToode = _context.Pood
+                .Where(p => p.KasutajaId == id)
+                .Select(p => new
+                {
+                    UserId = p.Kasutajad.Id,
+                    Kasutajanimi = p.Kasutajad.Kasutajanimi,
+                    Nimi = p.Kasutajad.Nimi,
+                    Perenimi = p.Kasutajad.Perenimi,
+                    Tooded = p.Kasutajad.Poods.Select(po => new
+                    {
+                        ToodeId = po.Toode.Id,
+                        Name = po.Toode.Name,
+                        Price = po.Toode.Price,
+                        IsActive = po.Toode.IsActive
+                    })
+                })
+                .FirstOrDefault();
+
+            if (kasutajaJaToode == null)
+            {
+                return NotFound();
+            }
+
+            return Ok(kasutajaJaToode);
+        }
+
+        [HttpPost("Lisa/{userId}")]
+        public ActionResult LisaPood(int userId,[FromBody] int productId)
+        {
+            var kasutaja = _context.Kasutajad.Find(userId);
+            var toode = _context.Tooded.Find(productId);
+
+            if (kasutaja == null || toode == null)
+            {
+                return NotFound();
+            }
+
+            var pood = new Pood
+            {
+                KasutajaId = userId,
+                ToodeId = productId,
+                Kasutajad = kasutaja,
+                Toode = toode
+            };
+
+            _context.Pood.Add(pood);
+            _context.SaveChanges();
+
+            return Ok("Toode lisa");
+        }
+
+        [HttpDelete("kustuta/{productId}")]
+        public async Task<IActionResult> DeleteToodeFromKasutaja(int productId)
+        {
+            var toode = await _context.Tooded
+                .FirstOrDefaultAsync(t => t.Id == productId);
+            _context.Tooded.Remove(toode);
+            await _context.SaveChangesAsync();
+
+            return Ok("Toode kustuta");
         }
     }
 }

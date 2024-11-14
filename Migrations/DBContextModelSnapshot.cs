@@ -102,7 +102,7 @@ namespace Buivol_web.Migrations
             modelBuilder.Entity("Buivol_web.Models.Pood", b =>
                 {
                     b.HasOne("Buivol_web.Models.Kasutajad", "Kasutajad")
-                        .WithMany()
+                        .WithMany("Poods")
                         .HasForeignKey("KasutajadId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -116,6 +116,11 @@ namespace Buivol_web.Migrations
                     b.Navigation("Kasutajad");
 
                     b.Navigation("Toode");
+                });
+
+            modelBuilder.Entity("Buivol_web.Models.Kasutajad", b =>
+                {
+                    b.Navigation("Poods");
                 });
 #pragma warning restore 612, 618
         }
